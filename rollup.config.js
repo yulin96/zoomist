@@ -1,16 +1,16 @@
-import resolve from 'rollup-plugin-node-resolve'
-import createBanner from 'create-banner'
-import babel from 'rollup-plugin-babel'
-import scss from 'rollup-plugin-scss'
-import postcss from 'postcss'
 import autoprefixer from 'autoprefixer'
+import createBanner from 'create-banner'
+import postcss from 'postcss'
+import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
+import scss from 'rollup-plugin-scss'
 import { terser } from 'rollup-plugin-terser'
 import { name } from './package.json'
 
 const globalName = 'Zoomist'
-const outputDocsFolder = 'docs/';
-const outputDistFolder = 'dist/';
-const inputFolder = 'src/';
+const outputDocsFolder = 'docs/'
+const outputDistFolder = 'dist/'
+const inputFolder = 'src/'
 const banner = createBanner({
   data: {
     name: `${name}.js`,
@@ -26,19 +26,19 @@ export default [
       file: `${outputDocsFolder}js/${name}.js`,
       format: 'umd',
       banner,
-      name: globalName
+      name: globalName,
     },
     plugins: [
       resolve(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       }),
       scss({
         output: `${outputDocsFolder}css/${name}.css`,
-        sass: require('node-sass'),
-        processor: () => postcss([autoprefixer()])
-      })
-    ]
+        sass: require('sass'),
+        processor: () => postcss([autoprefixer()]),
+      }),
+    ],
   },
   {
     input,
@@ -46,21 +46,21 @@ export default [
       file: `${outputDistFolder}${name}.min.js`,
       format: 'umd',
       banner,
-      name: globalName
+      name: globalName,
     },
     plugins: [
       resolve(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       }),
       terser(),
       scss({
         output: `${outputDistFolder}${name}.min.css`,
-        outputStyle: "compressed",
-        sass: require('node-sass'),
-        processor: () => postcss([autoprefixer()])
-      })
-    ]
+        outputStyle: 'compressed',
+        sass: require('sass'),
+        processor: () => postcss([autoprefixer()]),
+      }),
+    ],
   },
   {
     input,
@@ -68,18 +68,18 @@ export default [
       file: `${outputDistFolder}${name}.js`,
       format: 'umd',
       banner,
-      name: globalName
+      name: globalName,
     },
     plugins: [
       resolve(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       }),
       scss({
         output: `${outputDistFolder}${name}.css`,
-        sass: require('node-sass'),
-        processor: () => postcss([autoprefixer()])
-      })
-    ]
-  }
+        sass: require('sass'),
+        processor: () => postcss([autoprefixer()]),
+      }),
+    ],
+  },
 ]
